@@ -21,7 +21,7 @@ ninja -C gn-out
 
 ## Run example
 ```sh
-mkdir -p target
+mkdir -p target/data
 ./gn-out/example
 ```
 

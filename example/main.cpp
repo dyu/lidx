@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
 
     // Opens the index.
     indexer = lidx_new();
-    lidx_open(indexer, "target/index.lidx");
+    lidx_open(indexer, "target/data/lidx");
 
     // Adds data to the index.
     lidx_set(indexer, 0, "George Washington");
