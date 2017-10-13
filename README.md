@@ -28,41 +28,62 @@ mkdir -p target/data
 How to use lidx
 ===============
 
-```
-lidx * indexer;
-int r;
-uint64_t * result;
-size_t result_count;
+```cpp
+#include <vector>
+#include <iostream>
+#include <lidx.h>
 
-// Opens the index.
-indexer = lidx_new();
-lidx_open(indexer, "index.lidx");
+int main(int argc, char *argv[])
+{
+    lidx * indexer;
+    int r;
+    uint64_t * result;
+    size_t result_count;
 
-// Adds data to the index.
-lidx_set(indexer, 0, "George Washington");
-lidx_set(indexer, 1, "John Adams");
-lidx_set(indexer, 2, "Thomas Jefferson");
-lidx_set(indexer, 3, "George Michael");
-lidx_set(indexer, 4, "George Méliès");
+    // Opens the index.
+    indexer = lidx_new();
+    lidx_open(indexer, "target/data/lidx");
+    
+    std::vector<std::string> names;
+    names.push_back("George Washington");
+    names.push_back("John Adams");
+    names.push_back("Thomas Jefferson");
+    names.push_back("George Michael");
+    names.push_back("George Méliès");
 
-// Search "geor".
-print("searching geor");
-lidx_search(indexer, "geor", lidx_search_kind_suffix, &result, &result_count);
-for(size_t i = 0 ; i < result_count ; i ++) {
-  printf("found: %i\n", result[i]);
+    // Adds data to the index.
+    for (size_t i = 0, len = names.size(); i < len; i++)
+    {
+        lidx_set(indexer, i, names[i].c_str());
+    }
+    
+    std::cout << "\nSearching substr: as" << std::endl;
+    lidx_search(indexer, "as", lidx_search_kind_substr, &result, &result_count);
+    for (size_t i = 0; i < result_count; i++)
+    {
+        std::cout << "> " << names[result[i]] << std::endl;
+    }
+    free(result);
+
+    std::cout << "\nSearching suffix: son" << std::endl;
+    lidx_search(indexer, "son", lidx_search_kind_suffix, &result, &result_count);
+    for (size_t i = 0; i < result_count; i++)
+    {
+        std::cout << "> " << names[result[i]] << std::endl;
+    }
+    free(result);
+    
+    std::cout << "\nSearching prefix: mel" << std::endl;;
+    lidx_search(indexer, "mel", lidx_search_kind_prefix, &result, &result_count);
+    for (size_t i = 0; i < result_count; i++)
+    {
+        std::cout << "> " << names[result[i]] << std::endl;
+    }
+    free(result);
+
+    lidx_close(indexer);
+    lidx_free(indexer);
+    
+    return 0;
 }
-// returns 0, 3 and 4.
-free(result);
-
-// Search "mel".
-print("searching mel");
-lidx_search(indexer, "mel", lidx_search_kind_suffix, &result, &result_count);
-for(size_t i = 0 ; i < result_count ; i ++) {
-  printf("found: %i\n", result[i]);
-}
-// return 4
-free(result);
-
-lidx_close(indexer);
-lidx_free(indexer);
 ```
