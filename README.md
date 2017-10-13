@@ -10,7 +10,7 @@ Requirements
 
 Build via GN
 ============================
-```
+```sh
 git clone --depth 1 --single-branch -b cpp14 https://github.com/dyu/gn-build.git
 git clone --depth 1 --single-branch -b master https://github.com/dyu/gn-deps.git
 ./gn-deps/fetch.sh
@@ -20,7 +20,7 @@ ninja -C gn-out
 ```
 
 ## Run example
-```
+```sh
 mkdir -p target
 ./gn-out/example
 ```
