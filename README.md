@@ -19,7 +19,8 @@ gn gen gn-out --args='gcc_cc="gcc" gcc_cxx="g++" symbol_level=0 is_debug=false i
 ninja -C gn-out
 ```
 
-## Run example
+Run example
+===========
 ```sh
 mkdir -p target/data
 ./gn-out/example
