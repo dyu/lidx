@@ -36,9 +36,9 @@ How to use lidx
 
 int main(int argc, char *argv[])
 {
-    lidx * indexer;
+    lidx* indexer;
     int r;
-    uint64_t * result;
+    uint64_t* result;
     size_t result_count;
 
     // Opens the index.
