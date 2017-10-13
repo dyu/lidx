@@ -8,13 +8,22 @@ Requirements
 - LevelDB
 - ICU library
 
-How to build dependencies
+Build via GN
 ============================
 ```
-$ cd scripts
-$ ./prepare.sh
+git clone --depth 1 --single-branch -b ns https://github.com/dyu/gn-build.git
+git clone --depth 1 --single-branch -b master https://github.com/dyu/gn-deps.git
+./gn-deps/fetch.sh
+echo 'buildconfig = "//gn-build/config/BUILDCONFIG.gn"' > .gn
+gn gen gn-out --args='gcc_cc="gcc" gcc_cxx="g++" symbol_level=0 is_debug=false is_clang=false is_official_build=true'
+ninja -C gn-out
 ```
-The result will be available in lidx/third-party.
+
+## Run example
+```
+mkdir -p target
+./gn-out/example
+```
 
 How to use lidx
 ===============

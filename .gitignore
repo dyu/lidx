@@ -1,3 +1,9 @@
+/gn-build
+/gn-deps
+/gn-out
+/.gn
+target
+
 # Compiled Object files
 *.slo
 *.lo

@@ -1,0 +1,39 @@
+
+leveldb_dir = "deps/leveldb"
+
+config("leveldb_config") {
+  include_dirs = [ "$leveldb_dir/include", "$leveldb_dir" ]
+}
+
+lidx_sources = [
+  "src/lidx.h",
+  "src/lidx.cpp",
+  "src/lidx-encode.cpp",
+  "src/lidx-encode.h",
+  "src/lidx-icu-utils.c",
+  "src/lidx-icu-utils.h",
+  "src/lidx-utils",
+]
+
+config("lidx_config") {
+  include_dirs = [ "src" ]
+}
+
+static_library("lidx") {
+  public_configs = [ ":lidx_config" ]
+  sources = lidx_sources
+  deps = [
+    "//gn-deps/leveldb:leveldb",
+  ]
+}
+
+executable("example") {
+  sources = [ "example/main.cpp" ]
+  libs = [
+    "icuuc",
+    "icui18n",
+  ]
+  deps = [
+    ":lidx",
+  ]
+}
